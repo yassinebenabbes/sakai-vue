@@ -24,11 +24,15 @@ import AppTopBar from './AppTopbar.vue';
 import AppMenu from './AppMenu.vue';
 import AppConfig from './AppConfig.vue';
 import AppFooter from './AppFooter.vue';
+import axios from "axios";
 
 export default {
     emits: ['change-theme'],
     data() {
         return {
+            permissionNames: [],
+            user: {},
+            token: "",
             layoutMode: 'static',
             staticMenuInactive: false,
             overlayMenuActive: false,
@@ -149,7 +153,31 @@ export default {
             this.$toast.removeAllGroups();
         }
     },
+    mounted() {
+    this.checklogin();
+    
+  },
     methods: {
+        checklogin() {
+            axios.post("checkToken").then((response) => {
+                console.log(response.data);
+                if (response.data.test == false) {
+                    this.logout();
+                    this.$router.push({ name: "login" });
+                }
+            });
+        },
+        logout() {
+            axios.post("logout").then((response) => {
+                console.log(response);
+                localStorage.removeItem("permissionNames");
+                localStorage.removeItem("user");
+                localStorage.removeItem("token");
+                this.permissionNames = [];
+                this.user = {};
+                this.token = "";
+            });
+        },
         onWrapperClick() {
             if (!this.menuClick) {
                 this.overlayMenuActive = false;

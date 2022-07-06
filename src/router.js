@@ -13,6 +13,11 @@ const routes = [
                 component: () => import('./components/Dashboard.vue')
             },
             {
+                path: '/restaurants',
+                name: 'restaurant',
+                component: () => import('./components/Restaurant/Index.vue')
+            },
+            {
                 path: '/formlayout',
                 name: 'formlayout',
                 component: () => import('./components/FormLayoutDemo.vue')

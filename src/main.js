@@ -96,7 +96,10 @@ import TriStateCheckbox from 'primevue/tristatecheckbox';
 
 import CodeHighlight from './AppCodeHighlight';
 import BlockViewer from './BlockViewer';
-
+import axios from "axios";
+axios.defaults.baseURL = "https://api.evebiomonde.com/api/";
+axios.defaults.headers.common['Accept'] = 'application/json';
+axios.defaults.headers.common['Content-Type'] = 'multipart/form-data';
 router.beforeEach(function(to, from, next) {
     window.scrollTo(0, 0);
     next();
@@ -110,6 +113,7 @@ app.use(PrimeVue, { ripple: true, inputStyle: 'outlined' });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(router);
+
 
 app.directive('tooltip', Tooltip);
 app.directive('ripple', Ripple);
